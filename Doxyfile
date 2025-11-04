@@ -1,0 +1,21 @@
+﻿# Doxyfile 1.9.8
+PROJECT_NAME           = "Simple Calculator"
+PROJECT_NUMBER         = 1.0
+PROJECT_BRIEF          = "A simple HTML/CSS/JS calculator"
+OUTPUT_DIRECTORY       = docs/
+CREATE_SUBDIRS         = NO
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+INPUT                  = .
+FILE_PATTERNS          = *.js \
+                         *.md
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
+GENERATE_TREEVIEW      = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
