@@ -19,38 +19,48 @@ jobs:
       with:
         node-version: '18'
         
-    - name: Debug - Show directory structure
+    - name: Debug - Check file existence
       run: |
-        echo "=== Directory Structure ==="
-        ls -la
-        echo "=== JS files ==="
-        find . -name "*.js" -type f
-        echo "=== Test files ==="
-        ls -la test/
+        echo "=== Checking critical files ==="
+        ls -la js/calculator.js
+        ls -la test/coverage-test.js
+        echo "=== Full structure ==="
+        find . -name "*.js" | head -20
         
-    - name: Debug - Check calculator.js exports
+    - name: Debug - Test require from different paths
       run: |
-        echo "=== Checking calculator.js ==="
-        tail -10 js/calculator.js
-        echo "=== Testing require ==="
-        node -e "console.log('Testing require...'); try { const calc = require('./js/calculator.js'); console.log('✅ Require successful'); console.log('Exports:', Object.keys(calc)); } catch(e) { console.log('❌ Require failed:', e.message); }"
+        echo "=== Testing require paths ==="
+        node -e "
+          const paths = [
+            './js/calculator.js',
+            '../js/calculator.js', 
+            '/home/runner/work/VostrNekr/VostrNekr/js/calculator.js',
+            'js/calculator.js'
+          ];
+          paths.forEach(path => {
+            try {
+              require.resolve(path);
+              console.log('✅ Found:', path);
+            } catch(e) {
+              console.log('❌ Not found:', path);
+            }
+          });
+        "
         
     - name: Install dependencies
       run: npm install
       
-    - name: Run basic test without coverage
+    - name: Run basic test
       run: |
-        echo "=== Running basic test ==="
-        node test/coverage-test.js
-        echo "Test exit code: True"
-        
+        echo "=== Running from test directory ==="
+        cd test && node coverage-test.js
+      
     - name: Install c8
       run: npm install -g c8
       
     - name: Run tests with coverage
       run: |
-        echo "=== Running with coverage ==="
-        c8 node test/coverage-test.js
+        cd test && c8 node coverage-test.js
       
     - name: Generate coverage report
       run: c8 report --reporter=html --reporter=text

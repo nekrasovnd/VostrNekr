@@ -4,11 +4,12 @@
  */
 
 console.log('🔧 DEBUG: Starting test in CI...');
+console.log('🔧 DEBUG: Current directory:', process.cwd());
 
 try {
-    // Test if we can require the calculator
+    // Test if we can require the calculator - используем правильный путь
     console.log('🔧 DEBUG: Attempting to require calculator...');
-    const { Calculator } = require('./js/calculator.js');
+    const { Calculator } = require('../js/calculator.js');
     console.log('✅ DEBUG: Require successful');
     
     // Test basic instantiation
