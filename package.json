@@ -1,0 +1,17 @@
+﻿{
+  "name": "simple-calculator",
+  "version": "1.0.0",
+  "description": "A simple calculator with code analysis and coverage",
+  "main": "js/calculator.js",
+  "scripts": {
+    "test": "node test/coverage-test.js",
+    "coverage": "npx c8 node test/coverage-test.js && npx c8 report --reporter=html",
+    "coverage:report": "npx c8 report --reporter=text"
+  },
+  "keywords": ["calculator", "coverage", "testing"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "c8": "^8.0.0"
+  }
+}

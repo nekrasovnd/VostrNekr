@@ -9,6 +9,7 @@
  * @class Calculator
  * @brief Main calculator class handling operations and state
  */
+ 
 class Calculator {
     constructor() {
         /** 
@@ -184,6 +185,11 @@ class Calculator {
  */
 function initializeCalculator() {
     return new Calculator();
+}
+
+// Node.js compatibility
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { Calculator, initializeCalculator };
 }
 
 /**
