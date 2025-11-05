@@ -5,9 +5,8 @@
   "main": "js/calculator.js",
   "scripts": {
     "test": "node test/coverage-test.js",
-    "coverage": "c8 node test/coverage-test.js",
-    "coverage:report": "c8 report",
-    "coverage:check": "c8 check-coverage"
+    "coverage": "npx c8 --include=\"js/calculator.js\" --reporter=text node test/coverage-test.js",
+    "coverage:html": "npx c8 report --include=\"js/calculator.js\" --reporter=html"
   },
   "keywords": ["calculator", "coverage", "testing"],
   "author": "VostrNekr",

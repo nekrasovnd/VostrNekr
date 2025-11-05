@@ -17,10 +17,10 @@ class CoverageTest {
     test(name, testFn) {
         try {
             testFn();
-            console.log(\✅ \\);
+            console.log('✅ ' + name);
             this.passed++;
         } catch (error) {
-            console.log(\❌ \: \\);
+            console.log('❌ ' + name + ': ' + error.message);
             this.failed++;
         }
     }
@@ -115,7 +115,7 @@ class CoverageTest {
             if (calc.getDisplay() !== '12') throw new Error('Delete failed');
         });
         
-        console.log(\\\n📊 Results: \ passed, \ failed\);
+        console.log('\n📊 Results: ' + this.passed + ' passed, ' + this.failed + ' failed');
         return this.failed === 0;
     }
 }

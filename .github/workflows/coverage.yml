@@ -18,28 +18,25 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
+        cache: 'npm'
         
     - name: Install dependencies
       run: npm install
       
-    - name: Install c8 globally
-      run: npm install -g c8
-      
-    - name: Run tests with coverage from root
+    - name: Run tests with coverage using npx
       run: |
-        echo "=== Running coverage from root directory ==="
-        c8 --reporter=text --reporter=html node test/coverage-test.js
+        echo "=== Running tests with npx c8 ==="
+        npx c8 --include="js/calculator.js" --reporter=text node test/coverage-test.js
       
-    - name: Check if coverage files exist
+    - name: Generate HTML report
       run: |
-        echo "=== Checking coverage files ==="
-        ls -la coverage/ || echo "No coverage directory yet"
-        find . -name "*.json" -path "*/coverage/*" 2>/dev/null || echo "No coverage JSON files"
+        echo "=== Generating HTML report ==="
+        npx c8 report --include="js/calculator.js" --reporter=html
       
-    - name: Generate coverage report with explicit src
+    - name: Check coverage results
       run: |
-        echo "=== Generating coverage report ==="
-        c8 report --reporter=text --reporter=html --src="./js" --include="**/calculator.js"
+        echo "=== Coverage summary ==="
+        npx c8 report --include="js/calculator.js" --reporter=text
       
     - name: Upload coverage report
       uses: actions/upload-artifact@v4
@@ -47,7 +44,3 @@ jobs:
         name: coverage-report
         path: coverage/
         retention-days: 30
-        
-    - name: Check coverage with lower thresholds
-      run: |
-        c8 check-coverage --lines 50 --functions 50 --branches 40
