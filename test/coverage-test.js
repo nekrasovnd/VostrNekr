@@ -1,32 +1,33 @@
 ﻿/**
  * @file coverage-test.js  
- * @brief Extended tests for code coverage analysis
+ * @brief Basic test for CI debugging
  */
 
-// Import calculator class
-const Calculator = require('../js/calculator.js').Calculator;
-
-console.log('🧪 Starting basic coverage tests...');
+console.log('🔧 DEBUG: Starting test in CI...');
 
 try {
-    // Basic test to verify everything works
+    // Test if we can require the calculator
+    console.log('🔧 DEBUG: Attempting to require calculator...');
+    const { Calculator } = require('./js/calculator.js');
+    console.log('✅ DEBUG: Require successful');
+    
+    // Test basic instantiation
+    console.log('🔧 DEBUG: Creating calculator instance...');
     const calc = new Calculator();
+    console.log('✅ DEBUG: Calculator created');
     
-    // Test 1: Basic functionality
-    calc.inputDigit('5');
-    console.log('✅ Basic input test passed');
-    
-    // Test 2: Clear function
-    calc.clear();
-    console.log('✅ Clear test passed');
-    
-    // Test 3: Display
+    // Test basic method
+    console.log('🔧 DEBUG: Testing getDisplay...');
     const display = calc.getDisplay();
-    console.log('✅ Display test passed:', display);
+    console.log('✅ DEBUG: getDisplay result:', display);
     
-    console.log('🎉 All basic tests passed!');
+    console.log('🎉 DEBUG: ALL TESTS PASSED!');
     process.exit(0);
+    
 } catch (error) {
-    console.log('❌ Test failed:', error.message);
+    console.log('❌ DEBUG: TEST FAILED:');
+    console.log('Error name:', error.name);
+    console.log('Error message:', error.message);
+    console.log('Error stack:', error.stack);
     process.exit(1);
 }

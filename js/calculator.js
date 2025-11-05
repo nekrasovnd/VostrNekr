@@ -187,11 +187,6 @@ function initializeCalculator() {
     return new Calculator();
 }
 
-// Node.js compatibility
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { Calculator, initializeCalculator };
-}
-
 /**
  * @brief Initialize keyboard event listeners
  */
@@ -262,3 +257,8 @@ Calculator = function(...args) {
     return instance;
 };
 Calculator.prototype = originalConstructor.prototype;
+
+// Node.js compatibility
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { Calculator, initializeCalculator };
+}
