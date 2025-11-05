@@ -1,34 +1,126 @@
 ﻿/**
  * @file coverage-test.js  
- * @brief Basic test for CI debugging
+ * @brief Comprehensive test for code coverage
  */
 
-console.log('🔧 DEBUG: Starting test in CI...');
-console.log('🔧 DEBUG: Current directory:', process.cwd());
+const path = require('path');
+const { Calculator } = require('../js/calculator.js');
 
-try {
-    // Test if we can require the calculator - используем правильный путь
-    console.log('🔧 DEBUG: Attempting to require calculator...');
-    const { Calculator } = require('../js/calculator.js');
-    console.log('✅ DEBUG: Require successful');
-    
-    // Test basic instantiation
-    console.log('🔧 DEBUG: Creating calculator instance...');
-    const calc = new Calculator();
-    console.log('✅ DEBUG: Calculator created');
-    
-    // Test basic method
-    console.log('🔧 DEBUG: Testing getDisplay...');
-    const display = calc.getDisplay();
-    console.log('✅ DEBUG: getDisplay result:', display);
-    
-    console.log('🎉 DEBUG: ALL TESTS PASSED!');
-    process.exit(0);
-    
-} catch (error) {
-    console.log('❌ DEBUG: TEST FAILED:');
-    console.log('Error name:', error.name);
-    console.log('Error message:', error.message);
-    console.log('Error stack:', error.stack);
-    process.exit(1);
+console.log('🧪 Running comprehensive coverage tests...');
+
+class CoverageTest {
+    constructor() {
+        this.passed = 0;
+        this.failed = 0;
+    }
+
+    test(name, testFn) {
+        try {
+            testFn();
+            console.log(\✅ \\);
+            this.passed++;
+        } catch (error) {
+            console.log(\❌ \: \\);
+            this.failed++;
+        }
+    }
+
+    runAll() {
+        const calc = new Calculator();
+        
+        // Test basic operations
+        this.test('Constructor and initial state', () => {
+            if (calc.getDisplay() !== '0') throw new Error('Initial display not zero');
+            if (calc.operation !== null) throw new Error('Initial operation not null');
+        });
+        
+        this.test('Input digits', () => {
+            calc.clear();
+            calc.inputDigit('5');
+            if (calc.getDisplay() !== '5') throw new Error('Digit input failed');
+        });
+        
+        this.test('Multiple digits', () => {
+            calc.clear();
+            calc.inputDigit('1');
+            calc.inputDigit('2');
+            calc.inputDigit('3');
+            if (calc.getDisplay() !== '123') throw new Error('Multiple digits failed');
+        });
+        
+        this.test('Clear function', () => {
+            calc.clear();
+            if (calc.getDisplay() !== '0') throw new Error('Clear failed');
+        });
+        
+        this.test('Addition operation', () => {
+            calc.clear();
+            calc.inputDigit('3');
+            calc.handleOperation('+');
+            calc.inputDigit('2');
+            calc.performCalculation();
+            if (calc.getDisplay() !== '5') throw new Error('Addition failed');
+        });
+        
+        this.test('Subtraction operation', () => {
+            calc.clear();
+            calc.inputDigit('9');
+            calc.handleOperation('-');
+            calc.inputDigit('4');
+            calc.performCalculation();
+            if (calc.getDisplay() !== '5') throw new Error('Subtraction failed');
+        });
+        
+        this.test('Multiplication operation', () => {
+            calc.clear();
+            calc.inputDigit('6');
+            calc.handleOperation('*');
+            calc.inputDigit('7');
+            calc.performCalculation();
+            if (calc.getDisplay() !== '42') throw new Error('Multiplication failed');
+        });
+        
+        this.test('Division operation', () => {
+            calc.clear();
+            calc.inputDigit('8');
+            calc.handleOperation('/');
+            calc.inputDigit('2');
+            calc.performCalculation();
+            if (calc.getDisplay() !== '4') throw new Error('Division failed');
+        });
+        
+        this.test('Division by zero', () => {
+            calc.clear();
+            calc.inputDigit('5');
+            calc.handleOperation('/');
+            calc.inputDigit('0');
+            calc.performCalculation();
+            if (calc.getDisplay() !== 'Error') throw new Error('Division by zero failed');
+        });
+        
+        this.test('Decimal input', () => {
+            calc.clear();
+            calc.inputDigit('1');
+            calc.inputDecimal();
+            calc.inputDigit('5');
+            if (!calc.getDisplay().includes('.')) throw new Error('Decimal failed');
+        });
+        
+        this.test('Delete last character', () => {
+            calc.clear();
+            calc.inputDigit('1');
+            calc.inputDigit('2');
+            calc.inputDigit('3');
+            calc.deleteLast();
+            if (calc.getDisplay() !== '12') throw new Error('Delete failed');
+        });
+        
+        console.log(\\\n📊 Results: \ passed, \ failed\);
+        return this.failed === 0;
+    }
 }
+
+// Run tests
+const testSuite = new CoverageTest();
+const success = testSuite.runAll();
+process.exit(success ? 0 : 1);
