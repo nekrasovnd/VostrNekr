@@ -5,11 +5,11 @@
   "main": "js/calculator.js",
   "scripts": {
     "test": "node test/coverage-test.js",
-    "coverage": "npx c8 node test/coverage-test.js && npx c8 report --reporter=html",
+    "coverage": "npx c8 node test/coverage-test.js",
     "coverage:report": "npx c8 report --reporter=text"
   },
   "keywords": ["calculator", "coverage", "testing"],
-  "author": "Your Name",
+  "author": "VostrNekr",
   "license": "MIT",
   "devDependencies": {
     "c8": "^8.0.0"

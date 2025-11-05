@@ -18,13 +18,15 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
         
     - name: Install dependencies
       run: npm install
       
     - name: Run tests with coverage
-      run: npm run coverage
+      run: npx c8 node test/coverage-test.js
+      
+    - name: Generate coverage report
+      run: npx c8 report --reporter=html --reporter=text
       
     - name: Upload coverage report
       uses: actions/upload-artifact@v4
@@ -33,9 +35,6 @@ jobs:
         path: coverage/
         retention-days: 30
         
-    - name: Display coverage summary
-      run: npm run coverage:report
-      
     - name: Check coverage threshold
       run: |
         npx c8 check-coverage --lines 80 --functions 80 --branches 70
