@@ -23,10 +23,10 @@ jobs:
     - name: Install dependencies
       run: npm install
       
-    - name: Run tests with coverage using npx
+    - name: Run tests with coverage via npm
       run: |
-        echo "=== Running tests with npx c8 ==="
-        npx c8 --include="js/calculator.js" --reporter=text node test/coverage-test.js
+        echo "=== Running coverage via npm script ==="
+        npm run coverage
       
     - name: Generate HTML report
       run: |
