@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <input type="text" id="display" readonly value="0">
+        </div>
+        <div class="buttons">
+            <button class="btn clear" onclick="calculator.clear()">C</button>
+            <button class="btn delete" onclick="calculator.deleteLast()">DEL</button>
+            <button class="btn operator" onclick="calculator.handleOperation('/')">/</button>
+            <button class="btn operator" onclick="calculator.handleOperation('*')">*</button>
+            
+            <button class="btn number" onclick="calculator.inputDigit('7')">7</button>
+            <button class="btn number" onclick="calculator.inputDigit('8')">8</button>
+            <button class="btn number" onclick="calculator.inputDigit('9')">9</button>
+            <button class="btn operator" onclick="calculator.handleOperation('-')">-</button>
+            
+            <button class="btn number" onclick="calculator.inputDigit('4')">4</button>
+            <button class="btn number" onclick="calculator.inputDigit('5')">5</button>
+            <button class="btn number" onclick="calculator.inputDigit('6')">6</button>
+            <button class="btn operator" onclick="calculator.handleOperation('+')">+</button>
+            
+            <button class="btn number" onclick="calculator.inputDigit('1')">1</button>
+            <button class="btn number" onclick="calculator.inputDigit('2')">2</button>
+            <button class="btn number" onclick="calculator.inputDigit('3')">3</button>
+            <button class="btn equals" onclick="calculator.performCalculation()" rowspan="2">=</button>
+            
+            <button class="btn number zero" onclick="calculator.inputDigit('0')">0</button>
+            <button class="btn decimal" onclick="calculator.inputDecimal()">.</button>
+        </div>
+    </div>
+
+    <script src="js/calculator.js"></script>
+    <script>
+        // Initialize calculator
+        const calculator = new Calculator();
+        
+        // Update display function
+        Calculator.prototype.updateDisplay = function() {
+            document.getElementById('display').value = this.getDisplay();
+        };
+        
+        // Initialize display
+        calculator.updateDisplay();
+    </script>
+	
+	<script
+		src="test/test-calculator.js">
+	</script>
+</body>
+</html>
