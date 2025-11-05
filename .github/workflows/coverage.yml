@@ -23,20 +23,14 @@ jobs:
     - name: Install dependencies
       run: npm install
       
-    - name: Run tests with coverage via npm
+    - name: Run tests with local c8 binary
       run: |
-        echo "=== Running coverage via npm script ==="
-        npm run coverage
+        echo "=== Running coverage with local c8 ==="
+        ./node_modules/.bin/c8 --include="js/calculator.js" --reporter=text node test/coverage-test.js
       
-    - name: Generate HTML report
+    - name: Generate reports
       run: |
-        echo "=== Generating HTML report ==="
-        npx c8 report --include="js/calculator.js" --reporter=html
-      
-    - name: Check coverage results
-      run: |
-        echo "=== Coverage summary ==="
-        npx c8 report --include="js/calculator.js" --reporter=text
+        ./node_modules/.bin/c8 report --include="js/calculator.js" --reporter=html --reporter=text
       
     - name: Upload coverage report
       uses: actions/upload-artifact@v4
